@@ -26,6 +26,7 @@ public class WxMpMessageRouterConfiguration {
 
     @Bean
     public WxMpMessageRouter messageRouter(WxMpService wxMpService) {
+
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
 
         // 记录所有事件的日志 （异步执行）

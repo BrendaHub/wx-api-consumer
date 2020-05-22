@@ -10,10 +10,7 @@ import com.github.niefy.common.utils.PageUtils;
 import java.util.Map;
 
 /**
- * 消息模板
- *
- * @author niefy
- * @email niefy@qq.com
+ * 消息模板 *
  * @date 2019-11-12 18:30:15
  */
 public interface MsgTemplateService extends IService<MsgTemplate> {

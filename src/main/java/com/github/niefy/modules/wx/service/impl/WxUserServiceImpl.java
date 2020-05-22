@@ -11,6 +11,7 @@ import com.github.niefy.modules.wx.dao.WxUserMapper;
 import com.github.niefy.modules.wx.entity.WxUser;
 import com.github.niefy.modules.wx.dto.PageSizeConstant;
 import com.github.niefy.modules.wx.service.WxUserService;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
@@ -28,13 +29,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author Nifury
+  *
  * @date 2017-9-27
  */
 @Service
+@Slf4j
 public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> implements WxUserService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
+    @Autowired(required = false)
     private WxUserMapper userMapper;
     @Autowired
     private WxMpService wxService;
@@ -124,7 +126,11 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
 		try {
 			int page=1;
 			while (hasMore){
+				log.info(">>>> DEBUG LOITER >>>> 获取用户列表的参数： {}", nextOpenid);
 				WxMpUserList wxMpUserList = wxMpUserService.userList(nextOpenid);//拉取openid列表，每次最多1万个
+				log.info(">>>> DEBUG LOITER >>>> count is {}, nextopenis is {}, openids is {}, total is {}",
+						wxMpUserList.getCount(), wxMpUserList.getNextOpenid(),
+						wxMpUserList.getOpenids(), wxMpUserList.getTotal());
 				logger.info("拉取openid列表：第{}页，数量：{}",page++,wxMpUserList.getCount());
 				List<String> openids = wxMpUserList.getOpenids();
 				this.syncWxUsers(openids);
@@ -147,7 +153,7 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
 		if(openids.size()<1)return;
 		final String batch=openids.get(0).substring(20);//截取首个openid的一部分做批次号（打印日志时使用，无实际意义）
 		WxMpUserService wxMpUserService = wxService.getUserService();
-		int start=0,batchSize=openids.size(),end=Math.min(100,batchSize);
+		int start=0,batchSize=openids.size(),end=Math.min(100,batchSize);// 最多100个
 		logger.info("开始处理批次：{}，批次数量：{}",batch,batchSize);
 		while (start<end && end<=batchSize){//分批处理,每次最多拉取100个用户信息
 			final int finalStart = start,finalEnd = end;

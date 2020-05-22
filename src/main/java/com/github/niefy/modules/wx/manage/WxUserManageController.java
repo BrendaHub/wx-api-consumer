@@ -15,10 +15,7 @@ import com.github.niefy.common.utils.R;
 
 
 /**
- * 用户表
- *
- * @author niefy
- * @email niefy@qq.com
+ * 用户表 *
  * @date 2020-03-07 13:55:23
  */
 @RestController

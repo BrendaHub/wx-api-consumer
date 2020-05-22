@@ -8,6 +8,7 @@ import com.github.niefy.modules.wx.entity.TemplateMsgLog;
 import com.github.niefy.modules.wx.service.TemplateMsgLogService;
 import com.github.niefy.common.utils.PageUtils;
 import com.github.niefy.common.utils.Query;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Service
+@Slf4j
 public class TemplateMsgLogServiceImpl extends ServiceImpl<TemplateMsgLogMapper, TemplateMsgLog> implements TemplateMsgLogService {
 
     @Override
@@ -49,6 +51,7 @@ public class TemplateMsgLogServiceImpl extends ServiceImpl<TemplateMsgLogMapper,
      */
     @Scheduled(cron = "0 0/1 * * * ?")
     synchronized void batchAddLog() {
+        log.info(">>>>> INFO LOITER >>> 同步模板消息到DB，模板消息队列长度为， {}", logsQueue.size());
         List<TemplateMsgLog> logs = new ArrayList<>();
         while (!logsQueue.isEmpty()) {
             logs.add(logsQueue.poll());

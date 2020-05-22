@@ -17,9 +17,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 
-/**
- * @author Binary Wang
- */
+
 @Component
 public class MsgHandler extends AbstractHandler {
     Logger logger = LoggerFactory.getLogger(this.getClass());

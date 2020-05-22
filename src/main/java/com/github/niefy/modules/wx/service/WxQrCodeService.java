@@ -11,9 +11,6 @@ import java.util.Map;
 
 /**
  * 公众号带参二维码
- *
- * @author niefy
- * @email niefy@qq.com
  * @date 2020-01-02 11:11:55
  */
 public interface WxQrCodeService extends IService<WxQrCode> {

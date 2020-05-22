@@ -7,16 +7,14 @@ import com.github.niefy.config.TaskExcutor;
 import com.github.niefy.modules.wx.entity.Article;
 import com.github.niefy.modules.wx.entity.MsgReplyRule;
 import com.github.niefy.modules.wx.entity.WxMsg;
-import com.github.niefy.modules.wx.service.ArticleService;
-import com.github.niefy.modules.wx.service.MsgReplyRuleService;
-import com.github.niefy.modules.wx.service.MsgReplyService;
-import com.github.niefy.modules.wx.service.WxMsgService;
+import com.github.niefy.modules.wx.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -60,8 +58,12 @@ public class MsgReplyServiceImpl implements MsgReplyService {
             if (rules.isEmpty()) return false;
             long delay = 0;
             for (MsgReplyRule rule : rules) {
+                // 回复消息的内容为
+                String replyContent = rule.getReplyContent();
+
+                // 启动一个线程处理回复消息
                 TaskExcutor.schedule(() -> {
-                    this.reply(toUser,rule.getReplyType(),rule.getReplyContent());
+                    this.reply(toUser,rule.getReplyType(),replyContent);
                 }, delay, TimeUnit.MILLISECONDS);
                 delay += autoReplyInterval;
             }
@@ -71,6 +73,39 @@ public class MsgReplyServiceImpl implements MsgReplyService {
         }
         return false;
     }
+
+    /**
+     * @Author chenhj(brenda)
+     * @Description //TODO  根据规则配置通过微信客服消息接口自动回复消息，动态配置回复消息，可以在消息中添加模板占位符#{}
+     * @Date 18:26 2020/5/22
+     * @Param [exactMatch 是否精确匹配用户上行的关键字信息, toUser，目标用户openod, keywords， 事件名]
+     * @return boolean
+     * site: https://www.ant-loiter.com
+     **/
+    @Override
+    public boolean tryAutoReply(boolean exactMatch, String toUser, String keywords, String regexPartten) {
+        try {
+            WxMpUser userWxInfo = wxService.getUserService().userInfo(toUser, "zh_CN");
+            List<MsgReplyRule> rules = msgReplyRuleService.getMatchedRules(exactMatch, keywords);
+            if (rules.isEmpty()) return false;
+            long delay = 0;
+            for (MsgReplyRule rule : rules) {
+                // 回复消息的内容为
+                String replyContent = userWxInfo.getNickname() + rule.getReplyContent();
+                // 启动一个线程处理回复消息
+                TaskExcutor.schedule(() -> {
+                    this.reply(toUser,rule.getReplyType(),replyContent);
+                }, delay, TimeUnit.MILLISECONDS);
+                delay += autoReplyInterval;
+            }
+            return true;
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            log.error("订制自动回复出错：", e);
+        }
+        return false;
+    }
+
 
     @Override
     public void replyText(String toUser, String content) throws WxErrorException {

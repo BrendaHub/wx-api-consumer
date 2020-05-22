@@ -23,6 +23,8 @@ public interface MsgReplyService {
      */
     boolean tryAutoReply(boolean exactMatch, String toUser, String keywords);
 
+    boolean tryAutoReply(boolean exactMatch, String toUser, String keywords, String regexPartten);
+
     default void reply(String toUser,String replyType, String replyContent){
         try {
             if (WxConsts.KefuMsgType.TEXT.equals(replyType)) this.replyText(toUser, replyContent);

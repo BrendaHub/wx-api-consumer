@@ -7,10 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 时间处理工具
- *
- * @author Nifury
- */
+ * 时间处理工具 */
 public class TimeUtil {
     public static final DateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");

@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Nifury
+  *
  * @date 2017-9-27
  */
 @Data

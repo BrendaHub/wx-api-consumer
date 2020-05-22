@@ -17,10 +17,7 @@ import com.github.niefy.common.utils.R;
 
 
 /**
- * 微信消息
- *
- * @author niefy
- * @date 2020-05-14 17:28:34
+ * 微信消息 * @date 2020-05-14 17:28:34
  */
 @RestController
 @RequestMapping("/manage/wxMsg")

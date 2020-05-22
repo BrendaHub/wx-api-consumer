@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * 微信消息
  * 
- * @author niefy
+ *
  * @date 2020-05-14 17:28:34
  */
 @Data

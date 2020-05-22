@@ -10,10 +10,7 @@ import com.github.niefy.modules.wx.form.WxQrCodeForm;
 import lombok.Data;
 
 /**
- * 公众号带参二维码
- *
- * @author niefy
- * @email niefy@qq.com
+ * 公众号带参二维码 *
  * @date 2020-01-02 11:11:55
  */
 @Data

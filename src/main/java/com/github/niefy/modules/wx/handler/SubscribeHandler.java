@@ -14,9 +14,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.springframework.util.StringUtils;
 
-/**
- * @author Binary Wang
- */
+
 @Component
 public class SubscribeHandler extends AbstractHandler {
     @Autowired
@@ -29,10 +27,11 @@ public class SubscribeHandler extends AbstractHandler {
                                     WxSessionManager sessionManager) throws WxErrorException {
 
         this.logger.info("新关注用户 OPENID: " + wxMessage.getFromUser() + "，事件：" + wxMessage.getEventKey());
-
+        this.logger.info("事件是： " + wxMessage.getEvent());
+        // 更新本地微信关注用户信息
         userService.refreshUserInfo(wxMessage.getFromUser());
-
-        msgReplyService.tryAutoReply(true, wxMessage.getFromUser(), wxMessage.getEvent());
+        // 自动回复消息， 是否精确匹配， 目标用户openid， 事件
+        msgReplyService.tryAutoReply(true, wxMessage.getFromUser(), wxMessage.getEvent(), "#{}");
 
         if (!StringUtils.isEmpty(wxMessage.getEventKey())) {// 处理特殊事件，如用户扫描带参二维码关注
             msgReplyService.tryAutoReply(true, wxMessage.getFromUser(), wxMessage.getEventKey());

@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author Binary Wang
- */
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/wx/msg")
@@ -49,9 +47,9 @@ public class WxMpPortalController {
                        @RequestParam("openid") String openid,
                        @RequestParam(name = "encrypt_type", required = false) String encType,
                        @RequestParam(name = "msg_signature", required = false) String msgSignature) {
-//		logger.debug("\n接收微信请求：[openid=[{}], [signature=[{}], encType=[{}], msgSignature=[{}],"
-//						+ " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
-//				openid, signature, encType, msgSignature, timestamp, nonce, requestBody);
+		logger.debug("\n接收微信请求：[openid=[{}], [signature=[{}], encType=[{}], msgSignature=[{}],"
+						+ " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
+				openid, signature, encType, msgSignature, timestamp, nonce, requestBody);
 
         if (!wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");

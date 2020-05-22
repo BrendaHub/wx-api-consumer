@@ -17,10 +17,7 @@ import com.github.niefy.common.utils.R;
 
 
 /**
- * 自动回复规则
- *
- * @author niefy
- * @email niefy@qq.com
+ * 自动回复规则 *
  * @date 2019-11-12 18:30:15
  */
 @RestController

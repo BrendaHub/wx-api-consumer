@@ -19,10 +19,7 @@ import com.github.niefy.common.utils.R;
 
 
 /**
- * 消息模板
- *
- * @author niefy
- * @email niefy@qq.com
+ * 消息模板 *
  * @date 2019-11-12 18:30:15
  */
 @RestController

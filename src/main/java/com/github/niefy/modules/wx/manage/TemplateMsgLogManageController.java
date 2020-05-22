@@ -14,10 +14,7 @@ import com.github.niefy.common.utils.R;
 
 
 /**
- * 模版消息发送记录
- *
- * @author niefy
- * @email niefy@qq.com
+ * 模版消息发送记录 *
  * @date 2019-11-12 18:30:15
  */
 @RestController

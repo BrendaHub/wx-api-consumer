@@ -14,10 +14,7 @@ import com.github.niefy.common.utils.R;
 
 
 /**
- * 文章
- *
- * @author niefy
- * @email niefy@qq.com
+ * 文章 *
  * @date 2019-11-12 18:30:16
  */
 @RestController
