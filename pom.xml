@@ -35,7 +35,7 @@
 		<qcloud.cos.version>5.6.23</qcloud.cos.version>
 		<swagger.version>2.9.2</swagger.version>
 		<joda.time.version>2.10.6</joda.time.version>
-		<fastjson.version>1.2.68</fastjson.version>
+		<fastjson.version>1.2.83</fastjson.version>
 		<lombok.version>1.18.10</lombok.version>
 		<weixin-java.version>3.7.0</weixin-java.version>
 	</properties>
